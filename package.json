@@ -1,0 +1,19 @@
+{
+  "name": "fecser",
+  "version": "1.0.0",
+  "description": "universal fetcher for JS and TS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lukacspapp/fecser.git"
+  },
+  "author": "Lukacs J Papp",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lukacspapp/fecser/issues"
+  },
+  "homepage": "https://github.com/lukacspapp/fecser#readme"
+}
