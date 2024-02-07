@@ -1,4 +1,4 @@
-// Assuming FetchOptions is defined in a separate file 'types.ts'
+import './polyfills'
 import { FetchOptions } from './types';
 
 export async function fecser<TResponse, TBody>(

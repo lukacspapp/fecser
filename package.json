@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/lukacspapp/fecser/issues"
   },
-  "homepage": "https://github.com/lukacspapp/fecser#readme"
+  "homepage": "https://github.com/lukacspapp/fecser#readme",
+  "dependencies": {
+    "cross-fetch": "^4.0.0"
+  }
 }
