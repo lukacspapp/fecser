@@ -4,7 +4,7 @@ import { FetchOptions } from './types';
 export async function fecser<TResponse, TBody>(
   url: string,
   options: FetchOptions<TBody>
-): Promise<TResponse> {
+): Promise<TResponse | void> {
   const {
     method,
     headers = {},
@@ -16,6 +16,10 @@ export async function fecser<TResponse, TBody>(
     queryParams = {},
     signal,
     onRetry,
+    stream = false,
+    onStreamChunk,
+    onStreamError,
+    onStreamEnd,
   } = options;
 
   const queryParamsString = new URLSearchParams(
@@ -35,6 +39,26 @@ export async function fecser<TResponse, TBody>(
   try {
     const response = await fetch(fullUrl, fetchOptions);
 
+    if (stream && response.body) {
+      const reader = response.body.getReader();
+      try {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) {
+            if (onStreamEnd) onStreamEnd();
+            else console.log('Stream ended.'); // Default behavior if onStreamEnd is not provided
+            break;
+          }
+          if (onStreamChunk) onStreamChunk(value);
+          else console.log('Received chunk', value); // Default behavior for each chunk
+        }
+      } catch (streamError) {
+        if (onStreamError) onStreamError(streamError);
+        else console.error('Stream error:', streamError); // Default error handling
+      }
+      return;
+    }
+
     if (timeoutId) {
       clearTimeout(timeoutId);
     }
@@ -43,7 +67,6 @@ export async function fecser<TResponse, TBody>(
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    // Handle different response types
     switch (responseType) {
       case 'json':
         return await response.json() as TResponse;
