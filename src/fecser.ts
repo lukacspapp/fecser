@@ -46,15 +46,15 @@ export async function fecser<TResponse, TBody>(
           const { done, value } = await reader.read();
           if (done) {
             if (onStreamEnd) onStreamEnd();
-            else console.log('Stream ended.'); // Default behavior if onStreamEnd is not provided
+            else console.log('Stream ended.');
             break;
           }
           if (onStreamChunk) onStreamChunk(value);
-          else console.log('Received chunk', value); // Default behavior for each chunk
+          else console.log('Received chunk', value);
         }
       } catch (streamError) {
         if (onStreamError) onStreamError(streamError);
-        else console.error('Stream error:', streamError); // Default error handling
+        else console.error('Stream error:', streamError);
       }
       return;
     }
