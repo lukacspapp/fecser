@@ -53,7 +53,7 @@ export async function fecser<TResponse, TBody>(
           else console.log('Received chunk', value);
         }
       } catch (streamError) {
-        if (onStreamError) onStreamError(streamError);
+        if (onStreamError) onStreamError(streamError as Error);
         else console.error('Stream error:', streamError);
       }
       return;
@@ -69,17 +69,17 @@ export async function fecser<TResponse, TBody>(
 
     switch (responseType) {
       case 'json':
-        return await response.json() as TResponse;
+        return await response.json() as unknown as TResponse;
       case 'text':
-        return await response.text() as TResponse;
+        return await response.text() as unknown as TResponse;
       case 'blob':
-        return await response.blob() as TResponse;
+        return await response.blob() as unknown as TResponse;
       default:
         throw new Error("Unsupported response type");
     }
   } catch (error) {
     if (retries > 0) {
-      onRetry?.(retries, error);
+      onRetry?.(retries, error as Error);
       await new Promise(resolve => setTimeout(resolve, retryDelay));
       return fecser<TResponse, TBody>(url, { ...options, retries: retries - 1 });
     } else {
