@@ -19,3 +19,64 @@ Install `fecser` using npm or Yarn:
 npm install fecser
 # or
 yarn add fecser
+```
+
+## Usage
+
+Below are examples demonstrating how to use fecser for making HTTP requests.
+
+### Basic Fetch Request
+
+To perform a simple GET request:
+
+#### TypeScript:
+
+```typescript
+import { fecser, FetchOptions } from 'fecser';
+
+async function fetchData() {
+  const options: FetchOptions = {
+    method: 'GET', // HTTP method, default: 'GET'
+    responseType: 'json', // Expected response type, default: 'json'
+  };
+
+  const data = await fecser<YourResponseType>('https://example.com/api/data', options);
+  console.log(data);
+}
+
+# or
+
+async function fetchData() {
+  const options: FetchOptions = {
+    method: 'GET', // HTTP method, default: 'GET'
+    responseType: 'json', // Expected response type, default: 'json'
+  };
+
+  const data = await fecser('https://example.com/api/data', options) as YourResponseType;
+  console.log(data);
+}
+```
+
+
+#### JavaScript:
+
+```javascript
+const { fecser } = require('fecser');
+# or
+import { fecser } from 'fecser';
+
+async function fetchData() {
+  const options = {
+    method: 'GET', // HTTP method, default: 'GET'
+    responseType: 'json', // Expected response type, default: 'json'
+  };
+
+  const data = await fecser('https://example.com/api/data', options);
+  console.log(data);
+}
+```
+
+
+
+
+
